@@ -1,18 +1,41 @@
+import { StrictMode, useState } from 'react';
 import ReactDOM from 'react-dom';
-// import Pet from "./pet";
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import SearchParams from './SearchParams';
+import Details from './details';
+import ThemeContext from './ThemeContext';
+
 
 
 const App = () => {
+
+  const themeHook = useState("purple");
+
   return (
-    <div>
-      <h1>Adopt me!</h1>
-      <SearchParams />
-      {/* <Pet name="Birch" animal="Cat" breed="Orange and while stripes"></Pet>
-      <Pet name="Koda" animal="Dog" breed="American Eskimo"></Pet>
-      <Pet name="Phish" animal="Bunny" breed="cow like"></Pet> */}
-    </div>
+    <ThemeContext.Provider value={themeHook}>
+      <div>
+        <Router>
+        <header>
+        <Link to="/">
+        <h1>Adopt me!</h1>
+        </Link>
+        </header>
+          <Switch>
+            <Route path="/details/:id">
+              <Details />
+            </Route>
+            <Route path ="/">
+              <SearchParams />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
+    </ThemeContext.Provider>
   )
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <StrictMode>
+  <App />
+  </StrictMode>, 
+document.getElementById("root"));

@@ -9,10 +9,10 @@ import ThemeContext from './ThemeContext';
 
 const App = () => {
 
-  const themeHook = useState("purple");
+  const theme = useState("purple");
 
   return (
-    <ThemeContext.Provider value={themeHook}>
+    <ThemeContext.Provider value={theme}>
       <div>
         <Router>
         <header>

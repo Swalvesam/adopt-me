@@ -1,10 +1,23 @@
 import { StrictMode, useState } from 'react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  
+} from "@apollo/client";
+
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import SearchParams from './SearchParams';
 import Details from './details';
 import ThemeContext from './ThemeContext';
+import Beer from './Beer';
+import LendData from './Lend/Lend';
 
+const client = new ApolloClient({
+  uri: 'https://api.kivaws.org/graphql',
+  cache: new InMemoryCache()
+});
 
 
 const App = () => {
@@ -24,9 +37,17 @@ const App = () => {
             <Route path="/details/:id">
               <Details />
             </Route>
+            <Route path ="/beer">
+             <Beer/>
+            </Route>
+            <Route path ="/lend">
+              <LendData />
+            </Route>
             <Route path ="/">
               <SearchParams />
             </Route>
+           
+            
           </Switch>
         </Router>
       </div>
@@ -36,6 +57,8 @@ const App = () => {
 
 ReactDOM.render(
   <StrictMode>
-  <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </StrictMode>, 
 document.getElementById("root"));
